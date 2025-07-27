@@ -1,0 +1,48 @@
+import random
+
+class SimpleOptimizer:
+    def __init__(self, learning_rate=0.01):
+        self.learning_rate = learning_rate
+
+    def update(self, weights, gradients):
+        for i in range(len(weights)):
+            weights[i] -= self.learning_rate * gradients[i]
+        return weights
+
+class AdvancedOptimizer:
+    def __init__(self, learning_rate=0.005, momentum=0.9):
+        self.learning_rate = learning_rate
+        self.momentum = momentum
+        self.velocity = [0] * 10  # Assuming 10 weights, adjust as needed
+
+    def update(self, weights, gradients):
+        for i in range(len(weights)):
+            self.velocity[i] = self.momentum * self.velocity[i] - self.learning_rate * gradients[i]
+            weights[i] += self.velocity[i]
+        return weights
+
+
+def main():
+    # Initialize weights randomly
+    weights = [random.random() for _ in range(10)]
+
+    # Simulate gradients (replace with actual gradient calculation)
+    def calculate_gradients(weights):
+        return [w * 0.1 for w in weights]  # Example: gradient is 10% of the weight
+
+    # Choose an optimizer
+    optimizer = AdvancedOptimizer()
+
+    # Training loop
+    for epoch in range(100):
+        gradients = calculate_gradients(weights)
+        weights = optimizer.update(weights, gradients)
+
+        # Print progress (optional)
+        if epoch % 10 == 0:
+            print(f"Epoch {epoch}: Weights = {weights}")
+
+    print("Final Weights:", weights)
+
+if __name__ == "__main__":
+    main()
