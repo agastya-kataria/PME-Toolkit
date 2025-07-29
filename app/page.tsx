@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -21,83 +21,140 @@ import {
 } from "lucide-react"
 import { PerformanceChart } from "@/components/performance-chart"
 import { AllocationChart } from "@/components/allocation-chart"
+import { InvestmentModal } from "@/components/investment-modal"
+
+interface Investment {
+  id: string
+  name: string
+  sector: string
+  date: string
+  amount: number
+  stage: string
+  status: "Active" | "Pending" | "Closed"
+}
+
+interface Stat {
+  id: string
+  title: string
+  value: string
+  change: string
+  changeType: "positive" | "negative" | "neutral"
+  icon: any
+}
 
 export default function PrivateMarketsAnalyzer() {
   const [timeframe, setTimeframe] = useState("30-days")
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [searchTerm, setSearchTerm] = useState("")
+  const [investments, setInvestments] = useState<Investment[]>([])
+  const [stats, setStats] = useState<Stat[]>([])
 
-  const stats = [
-    {
-      title: "Total Portfolio Value",
-      value: "$12.7M",
-      change: "+4.2%",
-      changeType: "positive",
-      icon: ChartLine,
-    },
-    {
-      title: "YTD Return",
-      value: "8.6%",
-      change: "+1.8% above benchmark",
-      changeType: "positive",
-      icon: Percentage,
-    },
-    {
-      title: "New Investments",
-      value: "3",
-      change: "$2.1M deployed",
-      changeType: "neutral",
-      icon: DollarSign,
-    },
-    {
-      title: "Active Holdings",
-      value: "17",
-      change: "+2 added this quarter",
-      changeType: "positive",
-      icon: Building,
-    },
-  ]
+  // Initialize data
+  useEffect(() => {
+    const initialStats: Stat[] = [
+      {
+        id: "totalValue",
+        title: "Total Portfolio Value",
+        value: "$12.7M",
+        change: "+4.2% this month",
+        changeType: "positive",
+        icon: ChartLine,
+      },
+      {
+        id: "ytdReturn",
+        title: "YTD Return",
+        value: "8.6%",
+        change: "+1.8% above benchmark",
+        changeType: "positive",
+        icon: Percentage,
+      },
+      {
+        id: "newInvestments",
+        title: "New Investments",
+        value: "3",
+        change: "$2.1M deployed",
+        changeType: "neutral",
+        icon: DollarSign,
+      },
+      {
+        id: "activeHoldings",
+        title: "Active Holdings",
+        value: "17",
+        change: "+2 added this quarter",
+        changeType: "positive",
+        icon: Building,
+      },
+    ]
 
-  const investments = [
-    {
-      name: "Horizon Capital Fund V",
-      sector: "Private Equity",
-      date: "15 Sep 2023",
-      amount: "$850,000",
-      stage: "Growth",
-      status: "Active",
-    },
-    {
-      name: "Veridian Real Estate",
-      sector: "Real Estate",
-      date: "02 Sep 2023",
-      amount: "$1,200,000",
-      stage: "Income",
-      status: "Active",
-    },
-    {
-      name: "Nexus Venture Partners",
-      sector: "Venture Capital",
-      date: "22 Aug 2023",
-      amount: "$500,000",
-      stage: "Series B",
-      status: "Pending",
-    },
-    {
-      name: "Atlas Infrastructure Fund",
-      sector: "Infrastructure",
-      date: "10 Aug 2023",
-      amount: "$750,000",
-      stage: "Mature",
-      status: "Active",
-    },
-    {
-      name: "Pinnacle Credit Opportunities",
-      sector: "Private Debt",
-      date: "28 Jul 2023",
-      amount: "$600,000",
-      stage: "Senior Secured",
-      status: "Closed",
-    },
-  ]
+    const initialInvestments: Investment[] = [
+      {
+        id: "1",
+        name: "Horizon Capital Fund V",
+        sector: "Private Equity",
+        date: "2023-09-15",
+        amount: 850000,
+        stage: "Growth",
+        status: "Active",
+      },
+      {
+        id: "2",
+        name: "Veridian Real Estate",
+        sector: "Real Estate",
+        date: "2023-09-02",
+        amount: 1200000,
+        stage: "Income",
+        status: "Active",
+      },
+      {
+        id: "3",
+        name: "Nexus Venture Partners",
+        sector: "Venture Capital",
+        date: "2023-08-22",
+        amount: 500000,
+        stage: "Series B",
+        status: "Pending",
+      },
+      {
+        id: "4",
+        name: "Atlas Infrastructure Fund",
+        sector: "Infrastructure",
+        date: "2023-08-10",
+        amount: 750000,
+        stage: "Mature",
+        status: "Active",
+      },
+      {
+        id: "5",
+        name: "Pinnacle Credit Opportunities",
+        sector: "Private Debt",
+        date: "2023-07-28",
+        amount: 600000,
+        stage: "Senior Secured",
+        status: "Closed",
+      },
+    ]
+
+    setStats(initialStats)
+    setInvestments(initialInvestments)
+  }, [])
+
+  const formatCurrency = (amount: number) => {
+    return new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: "USD",
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0,
+    }).format(amount)
+  }
+
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString)
+    return date.toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+    })
+  }
 
   const getStatusVariant = (status: string) => {
     switch (status) {
@@ -110,6 +167,23 @@ export default function PrivateMarketsAnalyzer() {
       default:
         return "default"
     }
+  }
+
+  const filteredInvestments = investments.filter(
+    (investment) =>
+      investment.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      investment.sector.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      investment.stage.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      investment.status.toLowerCase().includes(searchTerm.toLowerCase()),
+  )
+
+  const handleAddInvestment = (newInvestment: Omit<Investment, "id">) => {
+    const investment: Investment = {
+      ...newInvestment,
+      id: Date.now().toString(),
+    }
+    setInvestments((prev) => [investment, ...prev])
+    setIsModalOpen(false)
   }
 
   return (
@@ -156,6 +230,8 @@ export default function PrivateMarketsAnalyzer() {
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
                 <Input
                   placeholder="Search investments..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
                   className="pl-10 w-64 bg-slate-800/50 border-amber-600/30 text-slate-200 placeholder:text-slate-400"
                 />
               </div>
@@ -232,16 +308,28 @@ export default function PrivateMarketsAnalyzer() {
               <div className="flex items-center justify-between">
                 <CardTitle className="text-slate-100">Portfolio Performance</CardTitle>
                 <div className="flex gap-2">
-                  <Button variant="outline" size="sm" className="border-amber-600/30 text-slate-300 bg-transparent">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="border-amber-600/30 text-slate-300 bg-transparent hover:bg-amber-600/10"
+                  >
                     1M
                   </Button>
-                  <Button variant="outline" size="sm" className="border-amber-600/30 text-slate-300 bg-transparent">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="border-amber-600/30 text-slate-300 bg-transparent hover:bg-amber-600/10"
+                  >
                     3M
                   </Button>
                   <Button size="sm" className="bg-amber-600 hover:bg-amber-700 text-slate-900">
                     1Y
                   </Button>
-                  <Button variant="outline" size="sm" className="border-amber-600/30 text-slate-300 bg-transparent">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="border-amber-600/30 text-slate-300 bg-transparent hover:bg-amber-600/10"
+                  >
                     All
                   </Button>
                 </div>
@@ -257,7 +345,11 @@ export default function PrivateMarketsAnalyzer() {
               <div className="flex items-center justify-between">
                 <CardTitle className="text-slate-100">Asset Allocation</CardTitle>
                 <div className="flex gap-2">
-                  <Button variant="outline" size="sm" className="border-amber-600/30 text-slate-300 bg-transparent">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="border-amber-600/30 text-slate-300 bg-transparent hover:bg-amber-600/10"
+                  >
                     Value
                   </Button>
                   <Button size="sm" className="bg-amber-600 hover:bg-amber-700 text-slate-900">
@@ -278,11 +370,19 @@ export default function PrivateMarketsAnalyzer() {
             <div className="flex items-center justify-between">
               <CardTitle className="text-slate-100">Recent Investments</CardTitle>
               <div className="flex gap-2">
-                <Button variant="outline" size="sm" className="border-amber-600/30 text-slate-300 bg-transparent">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="border-amber-600/30 text-slate-300 bg-transparent hover:bg-amber-600/10"
+                >
                   <Download className="w-4 h-4 mr-2" />
                   Export
                 </Button>
-                <Button size="sm" className="bg-amber-600 hover:bg-amber-700 text-slate-900">
+                <Button
+                  size="sm"
+                  className="bg-amber-600 hover:bg-amber-700 text-slate-900"
+                  onClick={() => setIsModalOpen(true)}
+                >
                   <Plus className="w-4 h-4 mr-2" />
                   New
                 </Button>
@@ -303,12 +403,15 @@ export default function PrivateMarketsAnalyzer() {
                   </tr>
                 </thead>
                 <tbody>
-                  {investments.map((investment, index) => (
-                    <tr key={index} className="border-b border-slate-700/50 hover:bg-slate-700/30 transition-colors">
+                  {filteredInvestments.map((investment) => (
+                    <tr
+                      key={investment.id}
+                      className="border-b border-slate-700/50 hover:bg-slate-700/30 transition-colors"
+                    >
                       <td className="py-3 px-4 text-slate-200 font-medium">{investment.name}</td>
                       <td className="py-3 px-4 text-slate-300">{investment.sector}</td>
-                      <td className="py-3 px-4 text-slate-300">{investment.date}</td>
-                      <td className="py-3 px-4 text-slate-200 font-medium">{investment.amount}</td>
+                      <td className="py-3 px-4 text-slate-300">{formatDate(investment.date)}</td>
+                      <td className="py-3 px-4 text-slate-200 font-medium">{formatCurrency(investment.amount)}</td>
                       <td className="py-3 px-4 text-slate-300">{investment.stage}</td>
                       <td className="py-3 px-4">
                         <Badge
@@ -349,6 +452,8 @@ export default function PrivateMarketsAnalyzer() {
           </p>
         </div>
       </footer>
+
+      <InvestmentModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} onSubmit={handleAddInvestment} />
     </div>
   )
 }
