@@ -42,7 +42,7 @@ This isn't just another portfolio calculator - it's a **production-grade institu
 ## 📊 **Real Dataset Examples**
 
 ### Blackstone Capital Partners VIII (Sample PE Fund)
-```python
+\`\`\`python
 Fund Details:
 - Vintage: 2018
 - Size: $26B

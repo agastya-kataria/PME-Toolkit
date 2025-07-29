@@ -731,4 +731,3 @@ class AdvancedUIComponents:
         
         # This is a simplified version - in production you'd have more sophisticated highlighting
         return ['background-color: lightgreen' if 'Base Case' in str(val) else '' for val in s]
-
