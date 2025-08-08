@@ -120,7 +120,26 @@ pm-analyzer/
 - Benchmark against public markets
 
 ---
+## 🖼️ Graphics and Screenshots
 
+Here are graphics for each section of the app:
+
+### 📌 Dashboard
+![Dashboard Screenshot](screenshots/dashboard.png)
+
+### 💼 Portfolio
+![Portfolio Screenshot](screenshots/portfolio.png)
+
+### 📈 Analytics
+![Analytics Screenshot](screenshots/analytics.png)
+
+### 📄 Reports
+![Reports Screenshot](screenshots/reports.png)
+
+### ⚙️ Settings
+![Settings Screenshot](screenshots/settings.png)
+
+---
 ## 🔧 Advanced Features
 
 ### Custom Analytics
