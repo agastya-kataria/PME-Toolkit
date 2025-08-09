@@ -242,7 +242,7 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 ## 📞 Contact
 
-- **GitHub Issues**: [Submit here](https://github.com/agatya-kataria/pm-analyzer/issues)
+- **GitHub Issues**: [Submit here](https://github.com/agastya-kataria/PME-Toolkit/issues)
 - **Email**: agastyakataria176@gmail.com
 - **LinkedIn**: [https://www.linkedin.com/in/agastyakataria176](https://www.linkedin.com/in/agastyakataria176)
 
