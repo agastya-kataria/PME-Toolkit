@@ -125,19 +125,35 @@ pm-analyzer/
 Here are graphics for each section of the app:
 
 ### 📌 Dashboard
-![Dashboard Screenshot](screenshots/dashboard.png)
+<img width="551" height="842" alt="image" src="https://github.com/user-attachments/assets/24f08916-4b6f-4d31-8d44-cc318c321471" />
+
 
 ### 💼 Portfolio
-![Portfolio Screenshot](screenshots/portfolio.png)
+<img width="818" height="870" alt="image" src="https://github.com/user-attachments/assets/d14a0366-cc98-4ded-a75c-6a0cfc40d7a4" />
 
 ### 📈 Analytics
-![Analytics Screenshot](screenshots/analytics.png)
+<img width="814" height="864" alt="image" src="https://github.com/user-attachments/assets/0456c51e-7071-47c0-92e9-1dd6f1c51b8d" />
 
 ### 📄 Reports
-![Reports Screenshot](screenshots/reports.png)
+
+- Generate Reports Page
+<img width="1108" height="708" alt="image" src="https://github.com/user-attachments/assets/d3d4aa43-b5b3-4b8c-9891-0bbddcbe6e0d" />
+
+- Scheduled Reports Page
+<img width="1095" height="771" alt="image" src="https://github.com/user-attachments/assets/ac98893d-59e1-4612-91ef-f503ff11cc74" />
+
+- Private Markets Dashboard with Report History
+<img width="1091" height="744" alt="image" src="https://github.com/user-attachments/assets/b279f145-a0ae-40c3-81db-489cae2390ef" />
 
 ### ⚙️ Settings
-![Settings Screenshot](screenshots/settings.png)
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/832ec9f4-fe44-4ad4-8731-6e94f69344a3" alt="Profile Settings Screenshot" width="300" height="780"/>
+  <img src="https://github.com/user-attachments/assets/c96c44a7-3756-4adb-9875-0fb765dc1be4" alt="Notification Preferences Screenshot" width="300" height="780"/>
+  <img src="https://github.com/user-attachments/assets/fd3de2f6-7be8-4693-8864-23fac8b4091a" alt="Display & Data Preferences Screenshot" width="300" height="780"/>
+  <img src="https://github.com/user-attachments/assets/2c53c7fd-a7b6-4611-8000-cf024abd5743" alt="Security Settings Screenshot" width="300" height="780"/>
+  <img src="https://github.com/user-attachments/assets/ad2b8d6d-1777-436e-84cb-7271d17ad796" alt="Activity Settings Screenshot" width="300" height="780"/>
+</p>
 
 ---
 ## 🔧 Advanced Features
