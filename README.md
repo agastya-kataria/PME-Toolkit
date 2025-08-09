@@ -84,6 +84,19 @@ print(f"Expected Final Value: ${results['statistics']['mean']:.1f}M")
 
 ### Project Structure
 
+```text
+pm-analyzer/
+├── main.py                 # Streamlit app entry point
+├── src/
+│   ├── data_ingestion.py   # Data loading and preprocessing
+│   ├── return_analytics.py # Return and risk calculations
+│   ├── monte_carlo.py      # Stochastic modeling
+│   ├── portfolio_optimizer.py # Optimization algorithms
+│   └── visualization.py    # Interactive charts and dashboards
+├── tests/                  # Unit tests
+├── docs/                   # Documentation
+└── examples/               # Jupyter notebooks and demos
+```
 
 ---
 
